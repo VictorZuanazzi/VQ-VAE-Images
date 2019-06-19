@@ -1,28 +1,28 @@
- #####################################################################################
- # MIT License                                                                       #
- #                                                                                   #
- # Copyright (C) 2019 Charly Lamothe                                                 #
- #                                                                                   #
- # This file is part of VQ-VAE-images.                                               #
- #                                                                                   #
- #   Permission is hereby granted, free of charge, to any person obtaining a copy    #
- #   of this software and associated documentation files (the "Software"), to deal   #
- #   in the Software without restriction, including without limitation the rights    #
- #   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       #
- #   copies of the Software, and to permit persons to whom the Software is           #
- #   furnished to do so, subject to the following conditions:                        #
- #                                                                                   #
- #   The above copyright notice and this permission notice shall be included in all  #
- #   copies or substantial portions of the Software.                                 #
- #                                                                                   #
- #   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      #
- #   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        #
- #   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     #
- #   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          #
- #   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   #
- #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE   #
- #   SOFTWARE.                                                                       #
- #####################################################################################
+#####################################################################################
+# MIT License                                                                       #
+#                                                                                   #
+# Copyright (C) 2019 Charly Lamothe                                                 #
+#                                                                                   #
+# This file is part of VQ-VAE-images.                                               #
+#                                                                                   #
+#   Permission is hereby granted, free of charge, to any person obtaining a copy    #
+#   of this software and associated documentation files (the "Software"), to deal   #
+#   in the Software without restriction, including without limitation the rights    #
+#   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       #
+#   copies of the Software, and to permit persons to whom the Software is           #
+#   furnished to do so, subject to the following conditions:                        #
+#                                                                                   #
+#   The above copyright notice and this permission notice shall be included in all  #
+#   copies or substantial portions of the Software.                                 #
+#                                                                                   #
+#   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      #
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        #
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     #
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          #
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   #
+#   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE   #
+#   SOFTWARE.                                                                       #
+#####################################################################################
 
 class Configuration(object):
     """
@@ -43,10 +43,10 @@ class Configuration(object):
         [ksw0306/ClariNet] https://github.com/ksw0306/ClariNet.
     """
 
-    default_batch_size = 32 # 32 instead of 128 specified in the paper
-    default_num_training_updates = 25000 # 25K instead of 250K specified in the paper
+    default_batch_size = 128  # 32 instead of 128 specified in the paper
+    default_num_training_updates = 250_000  # 25K instead of 250K specified in the paper
     default_num_hiddens = 128
-    default_num_residual_hiddens = 32 # 32 instead of 256 specified in the paper
+    default_num_residual_hiddens = 32  # 32 instead of 256 specified in the paper
     default_num_residual_layers = 2
 
     """
@@ -55,7 +55,7 @@ class Configuration(object):
     """
     default_embedding_dim = 64
 
-    default_num_embeddings = 512 # The higher this value, the higher the capacity in the information bottleneck.
+    default_num_embeddings = 512  # The higher this value, the higher the capacity in the information bottleneck.
 
     """
     Commitment cost should be set appropriately. It's often useful to try a couple
@@ -63,7 +63,7 @@ class Configuration(object):
     (log p(x|z)). So if the reconstruction cost is 100x higher, the
     commitment_cost should also be multiplied with the same amount.
     """
-    default_commitment_cost = 0.25 # 0.25 as specified in the paper
+    default_commitment_cost = 0.25  # 0.25 as specified in the paper
 
     """
     Only uses for the EMA updates (instead of the Adam optimizer).
@@ -74,7 +74,7 @@ class Configuration(object):
     """
     default_decay = 0.99
 
-    default_learning_rate = 3e-4 # 3e-4 instead of 2e-4 specified in the paper
+    default_learning_rate = 3e-4  # 3e-4 instead of 2e-4 specified in the paper
 
     """
     Weight initialization proposed by [He, K et al., 2015].
@@ -87,13 +87,13 @@ class Configuration(object):
 
     default_shuffle_dataset = True
 
-    def __init__(self, batch_size=default_batch_size, num_training_updates=default_num_training_updates, \
-        num_hiddens=default_num_hiddens, num_residual_hiddens=default_num_residual_hiddens, \
-        num_residual_layers=default_num_residual_layers, embedding_dim=default_embedding_dim, \
-        num_embeddings=default_num_embeddings, commitment_cost=default_commitment_cost, \
-        decay=default_decay, learning_rate=default_learning_rate, use_kaiming_normal=default_use_kaiming_normal, \
-        shuffle_dataset=default_shuffle_dataset):
-
+    def __init__(self, batch_size=default_batch_size, num_training_updates=default_num_training_updates,
+                 num_hiddens=default_num_hiddens, num_residual_hiddens=default_num_residual_hiddens,
+                 num_residual_layers=default_num_residual_layers, embedding_dim=default_embedding_dim,
+                 num_embeddings=default_num_embeddings, commitment_cost=default_commitment_cost,
+                 decay=default_decay, learning_rate=default_learning_rate,
+                 use_kaiming_normal=default_use_kaiming_normal,
+                 shuffle_dataset=default_shuffle_dataset):
         self._batch_size = batch_size
         self._num_training_updates = num_training_updates
         self._num_hiddens = num_hiddens
@@ -103,7 +103,7 @@ class Configuration(object):
         self._num_embeddings = num_embeddings
         self._commitment_cost = commitment_cost
         self._decay = decay
-        self._learning_rate = learning_rate 
+        self._learning_rate = learning_rate
         self._use_kaiming_normal = use_kaiming_normal
         self._shuffle_dataset = shuffle_dataset
 

@@ -1,34 +1,8 @@
-#####################################################################################
-# MIT License                                                                       #
-#                                                                                   #
-# Copyright (C) 2019 Charly Lamothe                                                 #
-#                                                                                   #
-# This file is part of VQ-VAE-images.                                               #
-#                                                                                   #
-#   Permission is hereby granted, free of charge, to any person obtaining a copy    #
-#   of this software and associated documentation files (the "Software"), to deal   #
-#   in the Software without restriction, including without limitation the rights    #
-#   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       #
-#   copies of the Software, and to permit persons to whom the Software is           #
-#   furnished to do so, subject to the following conditions:                        #
-#                                                                                   #
-#   The above copyright notice and this permission notice shall be included in all  #
-#   copies or substantial portions of the Software.                                 #
-#                                                                                   #
-#   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      #
-#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        #
-#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     #
-#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          #
-#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   #
-#   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE   #
-#   SOFTWARE.                                                                       #
-#####################################################################################
-
 from auto_encoder import AutoEncoder
 from trainer import Trainer
 from evaluator import Evaluator
 from cifar10_dataset import Cifar10Dataset
-#from Dataprocessing.arno_dataset_vae import ArnoDataset
+from Dataprocessing.arno_dataset_vae import ArnoDataset
 from configuration import Configuration
 
 import torch
@@ -40,7 +14,7 @@ import datetime
 import sys
 
 sys.path.insert(0, '/home/ubuntu/pycharm/arno-victor/Dataprocessing')
-#from arno_dataset_vae import ArnoDataset
+from arno_dataset_vae import ArnoDataset
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--batch_size', nargs='?', default=Configuration.default_batch_size, type=int,
@@ -94,14 +68,14 @@ if __name__ == "__main__":
 
     dataset_path = '..' + os.sep + args.data_path
 
-    dataset = Cifar10Dataset(configuration.batch_size, dataset_path,
-                              configuration.shuffle_dataset)  # Create an instance of CIFAR10 dataset
+    # dataset = Cifar10Dataset(configuration.batch_size, dataset_path,
+    #                           configuration.shuffle_dataset)  # Create an instance of CIFAR10 dataset
 
-    # dataset = ArnoDataset(csv_file="labels.csv", root_dir="arno-dataset-labeled",
-    #                       use_aws=True,
-    #                       label_class="Category",
-    #                       target_size=128, return_label=False,
-    #                       batch_size=args.batch_size)
+    dataset = ArnoDataset(csv_file="labels.csv", root_dir="arno-dataset-labeled",
+                          use_aws=True,
+                          label_class="Category",
+                          target_size=128, return_label=False,
+                          batch_size=args.batch_size)
 
     auto_encoder = AutoEncoder(device, configuration).to(device)  # Create an AutoEncoder model using our GPU device
 

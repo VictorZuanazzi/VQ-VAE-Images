@@ -1,29 +1,29 @@
- #####################################################################################
- # MIT License                                                                       #
- #                                                                                   #
- # Copyright (C) 2019 Charly Lamothe                                                 #
- # Copyright (C) 2018 Zalando Research                                               #
- #                                                                                   #
- # This file is part of VQ-VAE-images.                                               #
- #                                                                                   #
- #   Permission is hereby granted, free of charge, to any person obtaining a copy    #
- #   of this software and associated documentation files (the "Software"), to deal   #
- #   in the Software without restriction, including without limitation the rights    #
- #   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       #
- #   copies of the Software, and to permit persons to whom the Software is           #
- #   furnished to do so, subject to the following conditions:                        #
- #                                                                                   #
- #   The above copyright notice and this permission notice shall be included in all  #
- #   copies or substantial portions of the Software.                                 #
- #                                                                                   #
- #   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      #
- #   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        #
- #   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     #
- #   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          #
- #   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   #
- #   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE   #
- #   SOFTWARE.                                                                       #
- #####################################################################################
+#####################################################################################
+# MIT License                                                                       #
+#                                                                                   #
+# Copyright (C) 2019 Charly Lamothe                                                 #
+# Copyright (C) 2018 Zalando Research                                               #
+#                                                                                   #
+# This file is part of VQ-VAE-images.                                               #
+#                                                                                   #
+#   Permission is hereby granted, free of charge, to any person obtaining a copy    #
+#   of this software and associated documentation files (the "Software"), to deal   #
+#   in the Software without restriction, including without limitation the rights    #
+#   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell       #
+#   copies of the Software, and to permit persons to whom the Software is           #
+#   furnished to do so, subject to the following conditions:                        #
+#                                                                                   #
+#   The above copyright notice and this permission notice shall be included in all  #
+#   copies or substantial portions of the Software.                                 #
+#                                                                                   #
+#   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR      #
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,        #
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE     #
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER          #
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,   #
+#   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE   #
+#   SOFTWARE.                                                                       #
+#####################################################################################
 
 from encoder import Encoder
 from decoder import Decoder
@@ -36,10 +36,10 @@ import os
 
 
 class AutoEncoder(nn.Module):
-    
+
     def __init__(self, device, configuration):
         super(AutoEncoder, self).__init__()
-        
+
         """
         Create the Encoder with a fixed number of channel
         (3 as specified in the paper).
@@ -47,15 +47,15 @@ class AutoEncoder(nn.Module):
         self._encoder = Encoder(
             3,
             configuration.num_hiddens,
-            configuration.num_residual_layers, 
+            configuration.num_residual_layers,
             configuration.num_residual_hiddens,
             configuration.use_kaiming_normal
         )
 
         self._pre_vq_conv = nn.Conv2d(
-            in_channels=configuration.num_hiddens, 
+            in_channels=configuration.num_hiddens,
             out_channels=configuration.embedding_dim,
-            kernel_size=1, 
+            kernel_size=1,
             stride=1
         )
 
@@ -63,7 +63,7 @@ class AutoEncoder(nn.Module):
             self._vq_vae = VectorQuantizerEMA(
                 device,
                 configuration.num_embeddings,
-                configuration.embedding_dim, 
+                configuration.embedding_dim,
                 configuration.commitment_cost,
                 configuration.decay
             )
@@ -77,8 +77,8 @@ class AutoEncoder(nn.Module):
 
         self._decoder = Decoder(
             configuration.embedding_dim,
-            configuration.num_hiddens, 
-            configuration.num_residual_layers, 
+            configuration.num_hiddens,
+            configuration.num_residual_layers,
             configuration.num_residual_hiddens,
             configuration.use_kaiming_normal
         )
@@ -115,4 +115,3 @@ class AutoEncoder(nn.Module):
         model = AutoEncoder(device, configuration)
         model.load_state_dict(torch.load(path, map_location=device))
         return model
-
