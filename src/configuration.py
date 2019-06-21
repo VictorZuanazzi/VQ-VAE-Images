@@ -43,7 +43,7 @@ class Configuration(object):
         [ksw0306/ClariNet] https://github.com/ksw0306/ClariNet.
     """
 
-    default_batch_size = 128  # 32 instead of 128 specified in the paper
+    default_batch_size = 8  # 32 instead of 128 specified in the paper
     default_num_training_updates = 250_000  # 25K instead of 250K specified in the paper
     default_num_hiddens = 128
     default_num_residual_hiddens = 32  # 32 instead of 256 specified in the paper

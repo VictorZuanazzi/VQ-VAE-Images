@@ -1,8 +1,8 @@
 from auto_encoder import AutoEncoder
 from trainer import Trainer
 from evaluator import Evaluator
-from cifar10_dataset import Cifar10Dataset
-from Dataprocessing.arno_dataset_vae import ArnoDataset
+# from cifar10_dataset import Cifar10Dataset
+# from Dataprocessing.arno_dataset_vae import ArnoDataset
 from configuration import Configuration
 
 import torch
@@ -12,9 +12,11 @@ import argparse
 import time
 import datetime
 import sys
+from vae_arno_dataset import ArnoDataset
 
-sys.path.insert(0, '/home/ubuntu/pycharm/arno-victor/Dataprocessing')
-from arno_dataset_vae import ArnoDataset
+# sys.path.insert(0, '/home/ubuntu/pycharm/arno-victor/Dataprocessing')
+# from arno_dataset_vae import ArnoDataset
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--batch_size', nargs='?', default=Configuration.default_batch_size, type=int,
@@ -71,11 +73,13 @@ if __name__ == "__main__":
     # dataset = Cifar10Dataset(configuration.batch_size, dataset_path,
     #                           configuration.shuffle_dataset)  # Create an instance of CIFAR10 dataset
 
-    dataset = ArnoDataset(csv_file="labels.csv", root_dir="arno-dataset-labeled",
-                          use_aws=True,
-                          label_class="Category",
-                          target_size=128, return_label=False,
-                          batch_size=args.batch_size)
+    print(f"batch_size: {configuration.batch_size}")
+
+    dataset = ArnoDataset(batch_size=configuration.batch_size,
+                          path="../../../datasets/arno_v1",
+                          shuffle_dataset=configuration.shuffle_dataset,
+                          num_workers=6,
+                          im_size=128)
 
     auto_encoder = AutoEncoder(device, configuration).to(device)  # Create an AutoEncoder model using our GPU device
 

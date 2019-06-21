@@ -40,14 +40,21 @@ class Evaluator(object):
     def reconstruct(self):
         self._model.eval()
 
-        (self._valid_originals, _) = next(iter(self._dataset.validation_loader))
+        try:
+            (self._valid_originals, _) = next(iter(self._dataset.validation_loader))
+        except:
+            self._valid_originals = next(iter(self._dataset.validation_loader))
         self._valid_originals = self._valid_originals.to(self._device)
 
         vq_output_eval = self._model.pre_vq_conv(self._model.encoder(self._valid_originals))
         _, valid_quantize, _, _ = self._model.vq_vae(vq_output_eval)
         self._valid_reconstructions = self._model.decoder(valid_quantize)
 
-        (train_originals, _) = next(iter(self._dataset.training_loader))
+        try:
+            (train_originals, _) = next(iter(self._dataset.training_loader))
+        except:
+            train_originals = next(iter(self._dataset.training_loader))
+
         train_originals = train_originals.to(self._device)
         _, self._train_reconstructions, _, _ = self._model.vq_vae(train_originals)
 

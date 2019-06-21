@@ -60,7 +60,10 @@ class Trainer(object):
 
         iterator = iter(cycle(self._dataset.training_loader))
         for i in range(num_training_updates):
-            (data, _) = next(iterator)
+            try:
+                (data, _) = next(iterator)
+            except:
+                data = next(iterator)
             data = data.to(self._device)
             self._optimizer.zero_grad()
 
@@ -68,7 +71,7 @@ class Trainer(object):
             The perplexity a useful value to track during training.
             It indicates how many codes are 'active' on average.
             """
-            vq_loss, data_recon, perplexity = self._model(data)
+            vq_loss, data_recon, perplexity = self._model(data.view(-1,3, 128, 128))
             recon_error = torch.mean((data_recon - data) ** 2) / self._dataset.train_data_variance
             loss = recon_error + vq_loss
             loss.backward()
@@ -78,7 +81,7 @@ class Trainer(object):
             self._train_res_recon_error.append(recon_error.item())
             self._train_res_perplexity.append(perplexity.item())
 
-            if self._verbose and (i % (num_training_updates / 1000) == 0):
+            if self._verbose and (i % int(num_training_updates / 1000) == 0):
                 print('Iteration #{}'.format(i + 1))
 
                 # calculate the elapsed time and estimation to completion
